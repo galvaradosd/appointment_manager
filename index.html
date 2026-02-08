@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Appointment Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h1 class="site-header__title">Appointment Manager</h1>
+        <p class="site-header__subtitle">
+          Manage services and client appointments in a single page.
+        </p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel" aria-labelledby="services-heading">
+        <header class="panel__header">
+          <h2 id="services-heading" class="panel__title">Services</h2>
+          <p class="panel__description">
+            Define the services your business offers and their basic details.
+          </p>
+        </header>
+
+        <section class="panel__section" aria-label="Create service">
+          <h3 class="panel__subtitle">Add service</h3>
+          <form id="service-form" class="form">
+            <div class="form__field">
+              <label for="service-name" class="form__label">Name</label>
+              <input
+                id="service-name"
+                name="serviceName"
+                class="form__input"
+                type="text"
+                required
+                minlength="2"
+                maxlength="50"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form__field">
+              <label for="service-duration" class="form__label">
+                Duration (minutes)
+              </label>
+              <input
+                id="service-duration"
+                name="serviceDuration"
+                class="form__input"
+                type="number"
+                min="10"
+                max="480"
+                step="5"
+                required
+              />
+            </div>
+
+            <div class="form__field">
+              <label for="service-price" class="form__label">
+                Price (USD)
+              </label>
+              <input
+                id="service-price"
+                name="servicePrice"
+                class="form__input"
+                type="number"
+                min="0"
+                step="0.01"
+                required
+              />
+            </div>
+
+            <button type="submit" class="button button--primary">
+              Save service
+            </button>
+          </form>
+        </section>
+
+        <section class="panel__section" aria-label="List of services">
+          <h3 class="panel__subtitle">Existing services</h3>
+          <ul id="service-list" class="list list--services" aria-live="polite">
+            <!-- Services will be rendered here -->
+          </ul>
+        </section>
+      </section>
+
+      <section class="panel" aria-labelledby="appointments-heading">
+        <header class="panel__header">
+          <h2 id="appointments-heading" class="panel__title">Appointments</h2>
+          <p class="panel__description">
+            Create, filter and update client appointments.
+          </p>
+        </header>
+
+        <section class="panel__section" aria-label="Create appointment">
+          <h3 class="panel__subtitle">New appointment</h3>
+          <form id="appointment-form" class="form">
+            <div class="form__field">
+              <label for="client-name" class="form__label">Client name</label>
+              <input
+                id="client-name"
+                name="clientName"
+                class="form__input"
+                type="text"
+                required
+                minlength="2"
+                maxlength="60"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form__field">
+              <label for="client-email" class="form__label">Client email</label>
+              <input
+                id="client-email"
+                name="clientEmail"
+                class="form__input"
+                type="email"
+                required
+                maxlength="80"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form__field">
+              <label for="appointment-service" class="form__label">
+                Service
+              </label>
+              <select
+                id="appointment-service"
+                name="serviceId"
+                class="form__input"
+                required
+              >
+                <!-- Options rendered from services -->
+              </select>
+            </div>
+
+            <div class="form__field form__field--inline">
+              <div class="form__field">
+                <label for="appointment-date" class="form__label">Date</label>
+                <input
+                  id="appointment-date"
+                  name="appointmentDate"
+                  class="form__input"
+                  type="date"
+                  required
+                />
+              </div>
+
+              <div class="form__field">
+                <label for="appointment-time" class="form__label">Time</label>
+                <input
+                  id="appointment-time"
+                  name="appointmentTime"
+                  class="form__input"
+                  type="time"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="button button--primary">
+              Save appointment
+            </button>
+          </form>
+
+          <p id="holiday-message" class="helper-message" aria-live="polite"></p>
+        </section>
+
+        <section
+          class="panel__section panel__section--filters"
+          aria-label="Filters"
+        >
+          <h3 class="panel__subtitle">Filters</h3>
+          <form id="filters-form" class="filters">
+            <div class="filters__group">
+              <label for="filter-date" class="form__label">By date</label>
+              <input
+                id="filter-date"
+                name="filterDate"
+                class="form__input"
+                type="date"
+              />
+            </div>
+
+            <div class="filters__group">
+              <label for="filter-status" class="form__label">By status</label>
+              <select
+                id="filter-status"
+                name="filterStatus"
+                class="form__input"
+              >
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <button
+              type="button"
+              id="clear-filters"
+              class="button button--ghost"
+            >
+              Clear filters
+            </button>
+          </form>
+        </section>
+
+        <section
+          class="panel__section panel__section--appointments"
+          aria-label="Appointments list"
+        >
+          <h3 class="panel__subtitle">Appointments list</h3>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Client</th>
+                  <th scope="col">Service</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointment-table-body" aria-live="polite">
+                <!-- Rows rendered here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__text">
+        Example project for practicing modern JavaScript, DOM and browser
+        storage.
+      </p>
+    </footer>
+  </body>
+</html>
