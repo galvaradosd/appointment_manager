@@ -45,5 +45,5 @@ It is designed as a learning project to practice DOM manipulation, browser stora
 ```text
 .
 ├── index.html     # Main HTML file (semantic layout, script/style includes)
-├── styles.css     # Global styles for layout, forms, tables and components
-└── app.js         # Application logic (state, DOM handling, storage, async)
+├── style.css     # Global styles for layout, forms, tables and components
+└── main.js         # Application logic (state, DOM handling, storage, async)
