@@ -31,7 +31,7 @@ It is designed as a learning project to practice DOM manipulation, browser stora
   - Custom properties (`--color-*`, `--space-*`).
   - Logical properties and responsive layout.
 - **JavaScript (ES6+)**:
-  - Modules of logic grouped in a single `app.js`.
+  - Modules of logic grouped in a single `main.js`.
   - Higher-order functions: `map`, `filter`, `find`, `sort`, `includes`.
   - Browser Storage API: `localStorage.setItem`, `localStorage.getItem` with JSON  
     (see [MDN – Window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)).
